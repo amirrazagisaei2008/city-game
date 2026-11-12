@@ -1,0 +1,27 @@
+CREATE TABLE IF NOT EXISTS players (
+  id INTEGER PRIMARY KEY,
+  name TEXT NOT NULL,
+  coins REAL NOT NULL DEFAULT 0,
+  click_power INTEGER NOT NULL DEFAULT 1,
+  vip_until INTEGER NOT NULL DEFAULT 0,
+  banned INTEGER NOT NULL DEFAULT 0,
+  last_update INTEGER NOT NULL,
+  created_at INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS buildings (
+  user_id INTEGER NOT NULL,
+  type TEXT NOT NULL,
+  count INTEGER NOT NULL DEFAULT 0,
+  PRIMARY KEY (user_id, type)
+);
+
+CREATE TABLE IF NOT EXISTS messages (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  name TEXT NOT NULL,
+  text TEXT,
+  voice_data BLOB,
+  voice_type TEXT,
+  created_at INTEGER NOT NULL
+);

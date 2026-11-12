@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>شهرساز</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #0e1a2b;
+    --ink-2: #16263d;
+    --sand: #f2e8d5;
+    --sand-dim: #b9ad97;
+    --brick: #e0703a;
+    --mint: #5fbfa3;
+    --line: rgba(242, 232, 213, 0.12);
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0; min-height: 100%;
+    background: var(--ink); color: var(--sand);
+    font-family: "Vazirmatn", system-ui, sans-serif;
+  }
+  body { padding: 12px 14px 90px; max-width: 520px; margin: 0 auto; }
+
+  header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 14px; }
+  .title { font-weight: 900; font-size: 22px; letter-spacing: -0.2px; }
+  .vip-badge { font-size: 12px; color: var(--ink); background: var(--mint); padding: 4px 10px; border-radius: 99px; font-weight: 700; }
+
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .stat { background: var(--ink-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px; }
+  .stat small { color: var(--sand-dim); font-size: 12px; }
+  .stat strong { display: block; font-size: 22px; font-weight: 900; margin-top: 4px; direction: ltr; text-align: right; }
+
+  .click-zone { display: flex; justify-content: center; margin: 18px 0 22px; }
+  #clickBtn {
+    width: 170px; height: 170px; border-radius: 50%;
+    border: 2px solid var(--brick); background: radial-gradient(circle at 35% 30%, #f29a67, var(--brick) 70%);
+    color: var(--ink); font-size: 56px; cursor: pointer;
+    box-shadow: 0 10px 0 #9c4520; transition: transform 0.05s;
+  }
+  #clickBtn:active { transform: translateY(6px); box-shadow: 0 4px 0 #9c4520; }
+  .plus-float {
+    position: absolute; pointer-events: none; font-weight: 900; color: var(--mint);
+    animation: floatUp 0.7s ease-out forwards;
+  }
+  @keyframes floatUp { to { transform: translateY(-60px); opacity: 0; } }
+
+  .section-title { font-size: 14px; color: var(--sand-dim); margin: 6px 2px 8px; }
+  .building {
+    display: flex; justify-content: space-between; align-items: center; gap: 10px;
+    background: var(--ink-2); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 12px; margin-bottom: 8px;
+  }
+  .building .info b { display: block; font-size: 15px; }
+  .building .info span { font-size: 12px; color: var(--sand-dim); }
+  .buy {
+    border: 0; border-radius: 10px; padding: 10px 12px; font-family: inherit; font-weight: 700;
+    background: var(--mint); color: var(--ink); cursor: pointer; min-width: 110px;
+  }
+  .buy:disabled { background: #2e4158; color: var(--sand-dim); cursor: not-allowed; }
+
+  nav {
+    position: fixed; bottom: 0; left: 0; right: 0; background: var(--ink-2);
+    border-top: 1px solid var(--line); display: flex; justify-content: space-around;
+    padding: 8px 0 calc(8px + env(safe-area-inset-bottom, 0px));
+  }
+  nav button {
+    background: none; border: 0; color: var(--sand-dim); font-family: inherit; font-size: 13px; cursor: pointer; padding: 6px 12px;
+  }
+  nav button.active { color: var(--brick); font-weight: 700; }
+
+  .tab { display: none; }
+  .tab.active { display: block; }
+
+  #chatList {
+    height: 55vh; overflow-y: auto; background: var(--ink-2); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 10px; display: flex; flex-direction: column; gap: 8px;
+  }
+  .msg { background: var(--ink); border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 85%; }
+  .msg.me { align-self: flex-start; border-color: var(--mint); }
+  .msg .who { font-size: 11px; color: var(--mint); margin-bottom: 3px; }
+  .msg audio { width: 220px; max-width: 100%; margin-top: 4px; }
+  .chat-input { display: flex; gap: 8px; margin-top: 10px; }
+  .chat-input input {
+    flex: 1; background: var(--ink-2); border: 1px solid var(--line); color: var(--sand);
+    border-radius: 12px; padding: 12px; font-family: inherit; font-size: 15px;
+  }
+  .chat-input button {
+    border: 0; border-radius: 12px; padding: 0 14px; font-family: inherit; font-weight: 700; cursor: pointer;
+    background: var(--brick); color: var(--ink);
+  }
+  #micBtn.recording { background: #c0392b; color: #fff; }
+
+  .vip-card { background: var(--ink-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; }
+  .vip-card h3 { margin: 0 0 8px; font-size: 18px; }
+  .vip-card p { color: var(--sand-dim); font-size: 14px; line-height: 1.8; }
+  .vip-btn {
+    width: 100%; border: 0; border-radius: 12px; padding: 14px; font-family: inherit; font-size: 16px; font-weight: 900;
+    background: var(--brick); color: var(--ink); cursor: pointer; margin-top: 10px;
+  }
+  .toast {
+    position: fixed; top: 12px; left: 50%; transform: translateX(-50%); background: var(--sand); color: var(--ink);
+    padding: 10px 16px; border-radius: 10px; font-size: 14px; display: none; z-index: 10;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="title">شهرساز</div>
+  <div class="vip-badge" id="vipBadge" style="display:none">VIP</div>
+</header>
+
+<div class="stats">
+  <div class="stat"><small>سکه</small><strong id="coins">0</strong></div>
+  <div class="stat"><small>درآمد در ثانیه</small><strong id="rate">0</strong></div>
+</div>
+
+<!-- تب بازی -->
+<section class="tab active" id="tab-game">
+  <div class="click-zone" style="position:relative">
+    <button id="clickBtn" aria-label="ساخت سکه">🏙️</button>
+  </div>
+  <div class="section-title">ساختمان‌ها</div>
+  <div id="buildings"></div>
+</section>
+
+<!-- تب چت -->
+<section class="tab" id="tab-chat">
+  <div id="chatList"></div>
+  <div class="chat-input">
+    <button id="micBtn" title="پیام صوتی">🎙️</button>
+    <input id="chatText" placeholder="پیام بنویس..." maxlength="300" />
+    <button id="sendBtn">ارسال</button>
+  </div>
+</section>
+
+<!-- تب VIP -->
+<section class="tab" id="tab-vip">
+  <div class="vip-card">
+    <h3>اشتراک VIP</h3>
+    <p>
+      درآمد و کلیک دو برابر به مدت ۳۰ روز.<br />
+      قیمت: ۱۰۰ ستاره تلگرام.<br />
+      <span id="vipStatus"></span>
+    </p>
+    <button class="vip-btn" id="buyVipBtn">خرید اشتراک</button>
+  </div>
+</section>
+
+<nav>
+  <button data-tab="game" class="active">بازی</button>
+  <button data-tab="chat">چت</button>
+  <button data-tab="vip">VIP</button>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== تنظیمات =====
+const API_BASE = 'https://city-game-api.YOUR-SUBDOMAIN.workers.dev'; // آدرس Worker خودت
+
+const tg = window.Telegram?.WebApp;
+if (tg) { tg.ready(); tg.expand(); }
+const initData = tg?.initData || '';
+
+let state = null;
+let myId = null;
+
+const $ = (id) => document.getElementById(id);
+const fmt = (n) => Math.floor(n).toLocaleString('fa-IR');
+
+function toast(msg) {
+  const t = $('toast'); t.textContent = msg; t.style.display = 'block';
+  clearTimeout(toast._t); toast._t = setTimeout(() => (t.style.display = 'none'), 1800);
+}
+
+async function api(path, opts = {}) {
+  const headers = { 'X-Init-Data': initData, ...(opts.headers || {}) };
+  const res = await fetch(API_BASE + path, { ...opts, headers });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw Object.assign(new Error(data.error || 'error'), { data, status: res.status });
+  return data;
+}
+
+// ===== بازی =====
+function render() {
+  if (!state) return;
+  $('coins').textContent = fmt(state.coins);
+  $('rate').textContent = fmt(state.rate);
+  $('vipBadge').style.display = state.vipActive ? 'inline-block' : 'none';
+  $('vipStatus').textContent = state.vipActive
+    ? `فعال تا ${new Date(state.vipUntil).toLocaleDateString('fa-IR')}`
+    : 'اشتراک فعال نیست';
+
+  $('buildings').innerHTML = '';
+  for (const b of state.buildings) {
+    const row = document.createElement('div');
+    row.className = 'building';
+    row.innerHTML = `
+      <div class="info">
+        <b>${b.name} (${fmt(b.count)})</b>
+        <span>هر ساختمان ${fmt(b.income)} سکه در ثانیه</span>
+      </div>
+      <button class="buy" ${state.coins < b.cost ? 'disabled' : ''}>${fmt(b.cost)} سکه</button>`;
+    row.querySelector('.buy').onclick = () => buy(b.type);
+    $('buildings').appendChild(row);
+  }
+}
+
+async function loadState() {
+  state = await api('/api/state');
+  render();
+}
+
+let clicking = false;
+$('clickBtn').addEventListener('click', async (e) => {
+  if (!state) return;
+  state.coins += state.clickPower; render(); // پاسخ فوری به کاربر
+  const r = e.currentTarget.getBoundingClientRect();
+  const f = document.createElement('div');
+  f.className = 'plus-float';
+  f.textContent = `+${state.clickPower}`;
+  f.style.left = (r.left + r.width / 2 - 10) + 'px';
+  f.style.top = (r.top) + 'px';
+  document.body.appendChild(f);
+  setTimeout(() => f.remove(), 700);
+  if (clicking) return;
+  clicking = true;
+  try { state = await api('/api/click', { method: 'POST' }); render(); }
+  catch (err) { toast('خطا در ثبت کلیک'); }
+  clicking = false;
+});
+
+async function buy(type) {
+  try {
+    state = await api('/api/buy', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type }),
+    });
+    render();
+    toast('ساختمان ساخته شد');
+  } catch (err) {
+    if (err.data?.buildings) { state = err.data; render(); }
+    toast('سکه کافی نیست');
+  }
+}
+
+// درآمد لحظه‌ای روی صفحه (سرور مرجع اصلی است)
+setInterval(() => {
+  if (!state) return;
+  state.coins += state.rate / 10;
+  $('coins').textContent = fmt(state.coins);
+}, 100);
+setInterval(() => { if (document.visibilityState === 'visible') loadState().catch(() => {}); }, 15000);
+
+// ===== چت =====
+const audioCache = {};
+let chatTimer = null;
+
+async function audioUrl(id) {
+  if (audioCache[id]) return audioCache[id];
+  const res = await fetch(`${API_BASE}/api/voice/${id}`, {
+    headers: { 'X-Init-Data': initData },
+  });
+  const blob = await res.blob();
+  return (audioCache[id] = URL.createObjectURL(blob));
+}
+
+async function loadChat() {
+  const { messages } = await api('/api/messages');
+  const list = $('chatList');
+  const atBottom = list.scrollTop + list.clientHeight >= list.scrollHeight - 40;
+  list.innerHTML = '';
+  for (const m of messages) {
+    const div = document.createElement('div');
+    div.className = 'msg' + (m.user_id === myId ? ' me' : '');
+    const who = document.createElement('div');
+    who.className = 'who';
+    who.textContent = m.name;
+    div.appendChild(who);
+    if (m.text) {
+      const t = document.createElement('div');
+      t.textContent = m.text;
+      div.appendChild(t);
+    }
+    if (m.has_voice) {
+      const a = document.createElement('audio');
+      a.controls = true;
+      a.preload = 'none';
+      audioUrl(m.id).then((u) => (a.src = u));
+      div.appendChild(a);
+    }
+    list.appendChild(div);
+  }
+  if (atBottom) list.scrollTop = list.scrollHeight;
+}
+
+$('sendBtn').onclick = async () => {
+  const text = $('chatText').value.trim();
+  if (!text) return;
+  $('chatText').value = '';
+  try {
+    await api('/api/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text }),
+    });
+    loadChat();
+  } catch (err) { toast(err.data?.error === 'banned' ? 'حساب شما مسدود است' : 'ارسال نشد'); }
+};
+$('chatText').addEventListener('keydown', (e) => { if (e.key === 'Enter') $('sendBtn').click(); });
+
+// ضبط پیام صوتی: یک بار بزن برای شروع، دوباره بزن برای ارسال (حداکثر ۲۰ ثانیه)
+let recorder = null, chunks = [], recTimeout = null;
+$('micBtn').onclick = async () => {
+  if (recorder && recorder.state === 'recording') { recorder.stop(); return; }
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    recorder = new MediaRecorder(stream);
+    chunks = [];
+    recorder.ondataavailable = (e) => e.data.size && chunks.push(e.data);
+    recorder.onstop = async () => {
+      clearTimeout(recTimeout);
+      stream.getTracks().forEach((t) => t.stop());
+      $('micBtn').classList.remove('recording');
+      const blob = new Blob(chunks, { type: recorder.mimeType || 'audio/webm' });
+      try {
+        await fetch(`${API_BASE}/api/voice`, {
+          method: 'POST',
+          headers: { 'X-Init-Data': initData, 'Content-Type': blob.type },
+          body: blob,
+        });
+        loadChat();
+      } catch (err) { toast('ارسال پیام صوتی ناموفق بود'); }
+    };
+    recorder.start();
+    $('micBtn').classList.add('recording');
+    recTimeout = setTimeout(() => recorder.state === 'recording' && recorder.stop(), 20000);
+  } catch (err) { toast('دسترسی به میکروفون داده نشد'); }
+};
+
+// ===== تب‌ها و VIP =====
+document.querySelectorAll('nav button').forEach((btn) => {
+  btn.onclick = () => {
+    document.querySelectorAll('nav button').forEach((b) => b.classList.toggle('active', b === btn));
+    document.querySelectorAll('.tab').forEach((t) => t.classList.toggle('active', t.id === 'tab-' + btn.dataset.tab));
+    if (btn.dataset.tab === 'chat') { loadChat(); clearInterval(chatTimer); chatTimer = setInterval(loadChat, 4000); }
+    else { clearInterval(chatTimer); }
+  };
+});
+
+$('buyVipBtn').onclick = async () => {
+  try {
+    const { link } = await api('/api/vip/invoice', { method: 'POST' });
+    if (tg?.openInvoice) {
+      tg.openInvoice(link, (status) => {
+        if (status === 'paid') { toast('اشتراک VIP فعال شد'); loadState(); }
+      });
+    } else {
+      window.open(link, '_blank');
+    }
+  } catch (err) { toast('ساخت فاکتور ناموفق بود'); }
+};
+
+// ===== شروع =====
+(async function init() {
+  if (!initData) { toast('این بازی باید داخل تلگرام باز شود'); return; }
+  try {
+    myId = tg.initDataUnsafe.user.id;
+    await loadState();
+  } catch (err) {
+    toast(err.status === 403 ? 'حساب شما مسدود است' : 'ورود ناموفق بود');
+  }
+})();
+</script>
+</body>
+</html>
