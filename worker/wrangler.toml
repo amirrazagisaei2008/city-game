@@ -6,4 +6,4 @@ compatibility_date = "2025-01-01"
 [[d1_databases]]
 binding = "DB"
 database_name = "city-game-db"
-database_id = "PUT_YOUR_D1_DATABASE_ID_HERE"
+database_id = "109aabd9-d74b-4a58-a89c-74855aa4f1eb"
