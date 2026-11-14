@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>سامانه اشتراک و کانفیگ اختصاصی اینترنت | نت‌پلاس</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Notice Banner for Demo Mode -->
+  <div class="demo-top-bar">
+    <div class="container demo-bar-content">
+      <span class="demo-badge">حالت نمایشی (Demo)</span>
+      <span class="demo-text">
+        تمامی گزینه‌های <strong>حجم (۱۰ گزینه)</strong> و <strong>زمان (۹ گزینه)</strong> در <strong>هر دو بخش</strong> به صورت کاملاً نمایشی اعمال شده‌اند.
+      </span>
+      <button class="demo-close-btn" onclick="this.parentElement.parentElement.style.display='none'">✕</button>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-container">
+      <div class="logo-area">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <span class="brand-title">نت‌پلاس پرو</span>
+          <span class="brand-subtitle">سرویس هوشمند اینترنت بین‌الملل</span>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#section-vip" class="nav-link">بخش اول: اختصاصی تک‌کاربره</a>
+        <a href="#section-multi" class="nav-link">بخش دوم: چندکاربره خانوادگی</a>
+        <a href="#features" class="nav-link">امکانات سرورها</a>
+        <a href="#faq" class="nav-link">سوالات متداول</a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="server-status-pill">
+          <span class="status-dot"></span>
+          <span>سرورها: آنلاین (پینگ ۴۲ms)</span>
+        </div>
+        <button class="btn btn-outline" onclick="openTestConfigModal()">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"/>
+            <rect x="14" y="3" width="7" height="7"/>
+            <rect x="14" y="14" width="7" height="7"/>
+            <rect x="3" y="14" width="7" height="7"/>
+          </svg>
+          کانفیگ تستی نمایشی
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container hero-container">
+      <div class="hero-badge">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+        </svg>
+        پشتیبانی از تمام اپراتورها: همراه اول، ایرانسل، رایتل، مخابرات و فیبر نوری
+      </div>
+      <h1 class="hero-title">انتخاب حجم و مدت زمان اشتراک در <span class="gradient-text">هر دو بخش سرویس</span></h1>
+      <p class="hero-desc">
+        گزینه‌های حجم و زمان مورد نظر شما به هر دو بخش (سرویس تک‌کاربره اختصاصی و سرویس چندکاربره نامحدود) اضافه شده است.
+        روی هر حجم و زمان کلیک کنید تا مشخصات و قیمت نمایشی همان لحظه محاسبه گردد.
+      </p>
+
+      <!-- View Filter Toggle Buttons -->
+      <div class="view-switcher">
+        <span class="switcher-label">نمایش بخش‌ها:</span>
+        <button class="switcher-btn active" id="btn-show-both" onclick="switchView('both')">
+          نمایش هر دو بخش (کنار هم)
+        </button>
+        <button class="switcher-btn" id="btn-show-vip" onclick="switchView('vip')">
+          فقط بخش اول (تک‌کاربره)
+        </button>
+        <button class="switcher-btn" id="btn-show-multi" onclick="switchView('multi')">
+          فقط بخش دوم (چندکاربره)
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Pricing & Selection Container (TWO SECTIONS) -->
+  <main class="pricing-wrapper" id="pricing-wrapper">
+    <div class="container">
+
+      <div class="sections-grid" id="sections-grid">
+
+        <!-- ============================================== -->
+        <!-- SECTION 1: بخش اول - سرویس تک‌کاربره اختصاصی -->
+        <!-- ============================================== -->
+        <section class="service-card section-vip" id="section-vip">
+          <div class="card-glow-bg"></div>
+          
+          <div class="card-header">
+            <div class="section-tag section-tag-vip">
+              <span class="tag-number">بخش اول</span>
+              <span class="tag-badge">اختصاصی VIP</span>
+            </div>
+            <h2 class="card-title">سرویس تک‌کاربره پرسرعت</h2>
+            <p class="card-subtitle">
+              اتصال پایدار تک کاربره با آی‌پی ثابت، مناسب اینستاگرام، ترید، یوتیوب، تلگرام و وب‌گردی روزمره با حداکثر سرعت.
+            </p>
+          </div>
+
+          <div class="card-body">
+
+            <!-- 1. Volume Selection Section 1 -->
+            <div class="selector-group">
+              <div class="selector-header">
+                <div class="selector-title">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                    <line x1="12" y1="22.08" x2="12" y2="12"/>
+                  </svg>
+                  <span>انتخاب حجم ترافیک (نمایشی):</span>
+                </div>
+                <span class="selected-badge" id="vip-volume-display">۲۰ گیگابایت</span>
+              </div>
+
+              <div class="chips-grid" id="vip-volume-chips">
+                <!-- 10 Volume Options requested by user -->
+                <button type="button" class="chip-btn" data-value="300مگ" data-bytes="300MB" onclick="selectVolume('vip', '300مگ')">
+                  <span class="chip-label">300مگ</span>
+                  <span class="chip-sub">تستی</span>
+                </button>
+                <button type="button" class="chip-btn" data-value="1گیگ" data-bytes="1GB" onclick="selectVolume('vip', '1گیگ')">
+                  <span class="chip-label">1گیگ</span>
+                  <span class="chip-sub">اقتصادی</span>
+                </button>
+                <button type="button" class="chip-btn" data-value="5گیگ" data-bytes="5GB" onclick="selectVolume('vip', '5گیگ')">
+                  <span class="chip-label">5گیگ</span>
+                  <span class="chip-sub">سبک</span>
+                </button>
+                <button type="button" class="chip-btn" data-value="10گیگ" data-bytes="10GB" onclick="selectVolume('vip', '10گیگ')">
+                  <span class="chip-label">10گیگ</span>
+                  <span class="chip-sub">محبوب</span>
+                </button>
+                <button type="button" class="chip-btn" data-value="15گیگ" data-bytes="15GB" onclick="selectVolume('vip', '15گیگ')">
+                  <span class="chip-label">15گیگ</span>
+                  <span class="chip-sub">استاندارد</span>
+                </button>
+                <button type="button" class="chip-btn active" data-value="20گیگ" data-bytes="20GB" onclick="selectVolume('vip', '20گیگ')">
+                  <span class="chip-label">20گیگ</span>
+                  <span class="chip-sub">پیشنهادی</span>
+                </button>
+                <button type="button" class="chip-btn" data-value="30گیگ" data-bytes="30GB" onclick="selectVolume('vip', '30گیگ')">
+                  <span class="chip-label">30گیگ</span>
+                  <span class="chip-sub">پرفروش</span>
+                </button>
+                <button type="button" class="chip-btn" data-value="45گیگ" data-bytes="45GB" onclick="selectVolume('vip', '45گیگ')">
+                  <span class="chip-label">45گیگ</span>
+                  <span class="chip-sub">نیمه‌سنگین</span>
+                </button>
+                <button type="button" class="chip-btn" data-value="50 گیگ" data-bytes="50GB" onclick="selectVolume('vip', '50 گیگ')">
+                  <span class="chip-label">50 گیگ</span>
+                  <span class="chip-sub">پرحجم</span>
+                </button>
+                <button type="button" class="chip-btn special-chip" data-value="نامحدود" data-bytes="Unlimited" onclick="selectVolume('vip', 'نامحدود')">
+                  <span class="chip-label">نامحدود</span>
+                  <span class="chip-sub">بدون سقف</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 2. Time Selection Section 1 -->
+            <div class="selector-group">
+              <div class="selector-header">
+                <div class="selector-title">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                  <span>انتخاب مدت زمان (نمایشی):</span>
+                </div>
+                <span class="selected-badge" id="vip-time-display">۳۰ روزه</span>
+              </div>
+
+              <div class="chips-grid time-chips" id="vip-time-chips">
+                <!-- 9 Time Options requested by user -->
+                <button type="button" class="chip-btn" data-value="7روز" onclick="selectTime('vip', '7روز')">
+                  <span class="chip-label">7روز</span>
+                  <span class="chip-sub">هفتگی</span>
+                </button>
+                <button type="button" class="chip-btn" data-value="14 روز" onclick="selectTime('vip', '14 روز')">
+                  <span class="chip-label">14 روز</span>
+                  <span class="chip-sub">دو هفته</span>
+                </button>
+                <button type="button" class="chip-btn" data-value="21روز" onclick="selectTime('vip', '21روز')">
+                  <span class="chip-label">21روز</span>
+                  <span class="chip-sub">سه هفته</span>
+                </button>
+                <button type="button" class="chip-btn active" data-value="30روز" onclick="selectTime('vip', '30روز')">
+                  <span class="chip-label">30روز</span>
+                  <span class="chip-sub">یک‌ماهه</span>
+                </button>
+                <button type="button" class="chip-btn" data-value="45روز" onclick="selectTime('vip', '45روز')">
+                  <span class="chip-label">45روز</span>
+                  <span class="chip-sub">یک‌ماه و نیم</span>
+                </button>
+                <button type="button" class="chip-btn" data-value="60روز" onclick="selectTime('vip', '60روز')">
+                  <span class="chip-label">60روز</span>
+                  <span class="chip-sub">دو ماهه</span>
+                </button>
+                <button type="button" class="chip-btn" data-value="75روز" onclick="selectTime('vip', '75روز')">
+                  <span class="chip-label">75روز</span>
+                  <span class="chip-sub">دو ماه و نیم</span>
+                </button>
+                <button type="button" class="chip-btn" data-value="90روز" onclick="selectTime('vip', '90روز')">
+                  <span class="chip-label">90روز</span>
+                  <span class="chip-sub">سه‌ماهه</span>
+                </button>
+                <button type="button" class="chip-btn special-time-chip" data-value="1 سال" onclick="selectTime('vip', '1 سال')">
+                  <span class="chip-label">1 سال</span>
+                  <span class="chip-sub">سالانه (تخفیف ویژه)</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Summary & Calculated Price for Section 1 -->
+            <div class="plan-summary-box">
+              <div class="summary-row">
+                <span class="summary-label">حجم انتخابی بخش ۱:</span>
+                <strong class="summary-value" id="vip-sum-vol">20گیگ</strong>
+              </div>
+              <div class="summary-row">
+                <span class="summary-label">مدت زمان بخش ۱:</span>
+                <strong class="summary-value" id="vip-sum-time">30روز</strong>
+              </div>
+              <div class="summary-row">
+                <span class="summary-label">نوع اتصال:</span>
+                <span class="summary-val-badge">تک‌کاربره اختصاصی (VIP)</span>
+              </div>
+              <div class="summary-divider"></div>
+              <div class="price-row">
+                <div class="price-meta">
+                  <span class="price-tag-title">مبلغ تخمینی (نمایشی):</span>
+                  <span class="price-notice">محاسبه خودکار تستی</span>
+                </div>
+                <div class="price-amount">
+                  <span class="price-number" id="vip-calc-price">125,000</span>
+                  <span class="price-currency">تومان</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Features List -->
+            <ul class="plan-features-list">
+              <li>
+                <svg class="check-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>پروتکل‌های VLESS، VMess، Reality و Trojan</span>
+              </li>
+              <li>
+                <svg class="check-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>سرورهای آلمان، هلند و فنلاند با پینگ بسیار پایین</span>
+              </li>
+              <li>
+                <svg class="check-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>پشتیبانی اختصاصی و تعویض کانفیگ در صورت اختلال</span>
+              </li>
+            </ul>
+
+            <!-- Order Button Section 1 -->
+            <button class="btn btn-primary btn-block" onclick="openOrderModal('بخش اول: سرویس تک‌کاربره VIP', 'vip')">
+              <span>ثبت سفارش بخش اول (نمایشی)</span>
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+              </svg>
+            </button>
+            <div class="demo-tagline">این دکمه و محاسبات صرفاً پیش‌نمایش هستند</div>
+
+          </div>
+        </section>
+
+
+        <!-- ============================================== -->
+        <!-- SECTION 2: بخش دوم - سرویس چندکاربره و تمدید -->
+        <!-- ============================================== -->
+        <section class="service-card section-multi" id="section-multi">
+          <div class="card-glow-bg multi-glow"></div>
+          
+          <div class="card-header">
+            <div class="section-tag section-tag-multi">
+              <span class="tag-number">بخش دوم</span>
+              <span class="tag-badge">چندکاربره خانوادگی و پرو</span>
+            </div>
+            <h2 class="card-title">سرویس چندکاربره و تیمی</h2>
+            <p class="card-subtitle">
+              اتصال همزمان ۲ تا ۵ دستگاه، آی‌پی ثابت تضمینی بدون نوسان، مناسب استریم، دانلود پرسرعت، گیمینگ و اشتراک تیمی.
+            </p>
+          </div>
+
+          <div class="card-body">
+
+            <!-- 1. Volume Selection Section 2 -->
+            <div class="selector-group">
+              <div class="selector-header">
+                <div class="selector-title">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                  </svg>
+                  <span>انتخاب حجم ترافیک (نمایشی):</span>
+                </div>
+                <span class="selected-badge multi-badge" id="multi-volume-display">۵۰ گیگ</span>
+              </div>
+
+              <div class="chips-grid" id="multi-volume-chips">
+                <!-- Exactly the 10 Volume Options requested by user -->
+                <button type="button" class="chip-btn" data-value="300مگ" data-bytes="300MB" onclick="selectVolume('multi', '300مگ')">
+                  <span class="chip-label">300مگ</span>
+                  <span class="chip-sub">تستی</span>
+                </button>
+                <button type="button" class="chip-btn" data-value="1گیگ" data-bytes="1GB" onclick="selectVolume('multi', '1گیگ')">
+                  <span class="chip-label">1گیگ</span>
+                  <span class="chip-sub">سبک</span>
+                </button>
+                <button type="button" class="chip-btn" data-value="5گیگ" data-bytes="5GB" onclick="selectVolume('multi', '5گیگ')">
+                  <span class="chip-label">5گیگ</span>
+                  <span class="chip-sub">اقتصادی</span>
+                </button>
+                <button type="button" class="chip-btn" data-value="10گیگ" data-bytes="10GB" onclick="selectVolume('multi', '10گیگ')">
+                  <span class="chip-label">10گیگ</span>
+                  <span class="chip-sub">استاندارد</span>
+                </button>
+                <button type="button" class="chip-btn" data-value="15گیگ" data-bytes="15GB" onclick="selectVolume('multi', '15گیگ')">
+                  <span class="chip-label">15گیگ</span>
+                  <span class="chip-sub">متوسط</span>
+                </button>
+                <button type="button" class="chip-btn" data-value="20گیگ" data-bytes="20GB" onclick="selectVolume('multi', '20گیگ')">
+                  <span class="chip-label">20گیگ</span>
+                  <span class="chip-sub">کاربردی</span>
+                </button>
+                <button type="button" class="chip-btn" data-value="30گیگ" data-bytes="30GB" onclick="selectVolume('multi', '30گیگ')">
+                  <span class="chip-label">30گیگ</span>
+                  <span class="chip-sub">خانوادگی</span>
+                </button>
+                <button type="button" class="chip-btn" data-value="45گیگ" data-bytes="45GB" onclick="selectVolume('multi', '45گیگ')">
+                  <span class="chip-label">45گیگ</span>
+                  <span class="chip-sub">حرفه‌ای</span>
+                </button>
+                <button type="button" class="chip-btn active" data-value="50 گیگ" data-bytes="50GB" onclick="selectVolume('multi', '50 گیگ')">
+                  <span class="chip-label">50 گیگ</span>
+                  <span class="chip-sub">پرفروش‌ترین</span>
+                </button>
+                <button type="button" class="chip-btn special-chip multi-special" data-value="نامحدود" data-bytes="Unlimited" onclick="selectVolume('multi', 'نامحدود')">
+                  <span class="chip-label">نامحدود</span>
+                  <span class="chip-sub">توربو تیمی</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 2. Time Selection Section 2 -->
+            <div class="selector-group">
+              <div class="selector-header">
+                <div class="selector-title">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                  </svg>
+                  <span>انتخاب مدت زمان (نمایشی):</span>
+                </div>
+                <span class="selected-badge multi-badge" id="multi-time-display">۶۰ روزه</span>
+              </div>
+
+              <div class="chips-grid time-chips" id="multi-time-chips">
+                <!-- Exactly the 9 Time Options requested by user -->
+                <button type="button" class="chip-btn" data-value="7روز" onclick="selectTime('multi', '7روز')">
+                  <span class="chip-label">7روز</span>
+                  <span class="chip-sub">تستی</span>
+                </button>
+                <button type="button" class="chip-btn" data-value="14 روز" onclick="selectTime('multi', '14 روز')">
+                  <span class="chip-label">14 روز</span>
+                  <span class="chip-sub">دو هفته</span>
+                </button>
+                <button type="button" class="chip-btn" data-value="21روز" onclick="selectTime('multi', '21روز')">
+                  <span class="chip-label">21روز</span>
+                  <span class="chip-sub">سه هفته</span>
+                </button>
+                <button type="button" class="chip-btn" data-value="30روز" onclick="selectTime('multi', '30روز')">
+                  <span class="chip-label">30روز</span>
+                  <span class="chip-sub">یک‌ماهه</span>
+                </button>
+                <button type="button" class="chip-btn" data-value="45روز" onclick="selectTime('multi', '45روز')">
+                  <span class="chip-label">45روز</span>
+                  <span class="chip-sub">یک‌ماه و نیم</span>
+                </button>
+                <button type="button" class="chip-btn active" data-value="60روز" onclick="selectTime('multi', '60روز')">
+                  <span class="chip-label">60روز</span>
+                  <span class="chip-sub">دو ماهه</span>
+                </button>
+                <button type="button" class="chip-btn" data-value="75روز" onclick="selectTime('multi', '75روز')">
+                  <span class="chip-label">75روز</span>
+                  <span class="chip-sub">دو ماه و نیم</span>
+                </button>
+                <button type="button" class="chip-btn" data-value="90روز" onclick="selectTime('multi', '90روز')">
+                  <span class="chip-label">90روز</span>
+                  <span class="chip-sub">فصلی</span>
+                </button>
+                <button type="button" class="chip-btn special-time-chip multi-special" data-value="1 سال" onclick="selectTime('multi', '1 سال')">
+                  <span class="chip-label">1 سال</span>
+                  <span class="chip-sub">سالانه (ویژه چندکاربره)</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Summary & Calculated Price for Section 2 -->
+            <div class="plan-summary-box multi-summary-box">
+              <div class="summary-row">
+                <span class="summary-label">حجم انتخابی بخش ۲:</span>
+                <strong class="summary-value" id="multi-sum-vol">50 گیگ</strong>
+              </div>
+              <div class="summary-row">
+                <span class="summary-label">مدت زمان بخش ۲:</span>
+                <strong class="summary-value" id="multi-sum-time">60روز</strong>
+              </div>
+              <div class="summary-row">
+                <span class="summary-label">تعداد کاربر مجاز:</span>
+                <span class="summary-val-badge multi-val-badge">تا ۴ دستگاه همزمان</span>
+              </div>
+              <div class="summary-divider"></div>
+              <div class="price-row">
+                <div class="price-meta">
+                  <span class="price-tag-title">مبلغ تخمینی (نمایشی):</span>
+                  <span class="price-notice">محاسبه خودکار تستی</span>
+                </div>
+                <div class="price-amount">
+                  <span class="price-number multi-price-number" id="multi-calc-price">340,000</span>
+                  <span class="price-currency">تومان</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Features List -->
+            <ul class="plan-features-list">
+              <li>
+                <svg class="check-icon multi-check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>اتصال همزمان گوشی، لپ‌تاپ، تبلت و تلویزیون هوشمند</span>
+              </li>
+              <li>
+                <svg class="check-icon multi-check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>تونل اختصاصی گیمینگ بدون پکت لاس و پینگ زیر ۵۰ms</span>
+              </li>
+              <li>
+                <svg class="check-icon multi-check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>لوکیشن‌های فرانسه، ترکیه، امارات، آلمان و آمریکا</span>
+              </li>
+            </ul>
+
+            <!-- Order Button Section 2 -->
+            <button class="btn btn-multi btn-block" onclick="openOrderModal('بخش دوم: سرویس چندکاربره و تیمی', 'multi')">
+              <span>ثبت سفارش بخش دوم (نمایشی)</span>
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+              </svg>
+            </button>
+            <div class="demo-tagline">این دکمه و محاسبات صرفاً پیش‌نمایش هستند</div>
+
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Quick Comparison / Reference Banner -->
+      <div class="options-recap-card">
+        <div class="recap-header">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          <h3>فهرست کامل گزینه‌های نمایشی پیاده‌سازی شده در سایت:</h3>
+        </div>
+        <div class="recap-body">
+          <div class="recap-col">
+            <div class="recap-col-title">حجم‌های فعال در هر دو بخش (۱۰ گزینه):</div>
+            <div class="recap-tags">
+              <span class="recap-tag">300مگ</span>
+              <span class="recap-tag">1گیگ</span>
+              <span class="recap-tag">5گیگ</span>
+              <span class="recap-tag">10گیگ</span>
+              <span class="recap-tag">15گیگ</span>
+              <span class="recap-tag">20گیگ</span>
+              <span class="recap-tag">30گیگ</span>
+              <span class="recap-tag">45گیگ</span>
+              <span class="recap-tag">50 گیگ</span>
+              <span class="recap-tag highlight-tag">نامحدود</span>
+            </div>
+          </div>
+          <div class="recap-col">
+            <div class="recap-col-title">زمان‌های فعال در هر دو بخش (۹ گزینه):</div>
+            <div class="recap-tags">
+              <span class="recap-tag">7روز</span>
+              <span class="recap-tag">14 روز</span>
+              <span class="recap-tag">21روز</span>
+              <span class="recap-tag">30روز</span>
+              <span class="recap-tag">45روز</span>
+              <span class="recap-tag">60روز</span>
+              <span class="recap-tag">75روز</span>
+              <span class="recap-tag">90روز</span>
+              <span class="recap-tag highlight-tag">1 سال</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Features Section -->
+  <section class="features-section" id="features">
+    <div class="container">
+      <div class="section-heading text-center">
+        <span class="sub-heading">امکانات و پروتکل‌ها</span>
+        <h2 class="main-heading">چرا کاربران نت‌پلاس را انتخاب می‌کنند؟</h2>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-item">
+          <div class="feature-icon icon-cyan">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <h3>پروتکل‌های پیشرفته Reality</h3>
+          <p>استفاده از شبیه‌سازی ترافیک معتبر و ضد فیلترینگ بدون قطعی روی همراه اول، ایرانسل و وای‌فای خانگی.</p>
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-icon icon-emerald">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+            </svg>
+          </div>
+          <h3>پینگ بهینه برای گیم و ترید</h3>
+          <p>لوکیشن‌های اروپایی و آسیایی با حداقل تاخیر برای بایننس، کوکوین، متاتریدر، پابجی و دوتا ۲.</p>
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-icon icon-purple">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+              <line x1="8" y1="21" x2="16" y2="21"/>
+              <line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+          </div>
+          <h3>پشتیبانی از تمام اپلیکیشن‌ها</h3>
+          <p>سازگار کامل با v2rayNG، Hiddify، Streisand، Nekoray، Sing-box و Shadowrocket.</p>
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-icon icon-amber">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 14 14"/>
+            </svg>
+          </div>
+          <h3>تحویل آنی و تست خودکار</h3>
+          <p>دریافت آنی سابسکریپشن هوشمند و کانفیگ‌های اختصاصی بلافاصله پس از ثبت درخواست.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq-section" id="faq">
+    <div class="container faq-container">
+      <div class="section-heading text-center">
+        <span class="sub-heading">راهنمایی و سوالات</span>
+        <h2 class="main-heading">سوالات متداول کاربران</h2>
+      </div>
+
+      <div class="faq-accordion">
+        <div class="faq-card open">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span>آیا این گزینه‌های حجم و زمان واقعی هستند یا نمایشی؟</span>
+            <svg class="chevron" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="faq-answer">
+            <p>
+              همان‌طور که درخواست داده بودید، تمامی گزینه‌های حجم (از ۳۰۰ مگابایت تا نامحدود) و زمان (از ۷ روز تا ۱ سال) به صورت <strong>کاملاً نمایشی و تعاملی</strong> پیاده‌سازی شده‌اند و هیچ پرداخت یا شارژ واقعی متصل نیست. می‌توانید هرکدام را آزادانه کلیک و آزمایش کنید.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span>تفاوت بخش اول (تک‌کاربره) و بخش دوم (چندکاربره) در چیست؟</span>
+            <svg class="chevron" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="faq-answer">
+            <p>
+              بخش اول برای استفاده یک دستگاه طراحی شده و روی سرعت و پینگ فردی تمرکز دارد. بخش دوم امکان اتصال همزمان چندین دستگاه (گوشی، لپ‌تاپ، تبلت خانواده) را بدون افت کیفیت فراهم می‌سازد.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <span>آیا امکان تغییر حجم و زمان در هر دو بخش به راحتی وجود دارد؟</span>
+            <svg class="chevron" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="faq-answer">
+            <p>
+              بله! در هر دو کارت به صورت مستقل می‌توانید روی هر یک از دکمه‌های حجم و زمان کلیک کنید تا مقادیر انتخابی و قیمت تخمینی به شکل زنده به‌روزرسانی شوند.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-left">
+        <div class="footer-brand">نت‌پلاس پرو | NetPlus Pro</div>
+        <p class="footer-desc">طراحی رابط کاربری حرفه‌ای سامانه سفارش سرویس و کانفیگ اختصاصی اینترنت (نسخه پیش‌نمایش).</p>
+      </div>
+      <div class="footer-right">
+        <div class="demo-tag-footer">حالت دمو (گزینه‌های حجم و زمان نمایشی)</div>
+        <p class="copyright">© کلیه حقوق برای پیش‌نمایش رابط کاربری محفوظ است.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal: Preview Order / Sample Config -->
+  <div class="modal-overlay" id="orderModal" onclick="closeOrderModal(event)">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-badge-demo">پیش‌فاکتور نمایشی</span>
+          <h3 class="modal-title" id="modalSectionName">سفارش سرویس</h3>
+        </div>
+        <button class="modal-close" onclick="closeOrderModalDirect()">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-alert">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          <span>این اطلاعات به صورت <strong>نمایشی</strong> تولید شده‌اند و خریدی ثبت نخواهد شد.</span>
+        </div>
+
+        <div class="modal-spec-grid">
+          <div class="spec-card">
+            <span class="spec-label">حجم انتخابی:</span>
+            <span class="spec-value highlight-cyan" id="modalVolumeValue">20گیگ</span>
+          </div>
+          <div class="spec-card">
+            <span class="spec-label">مدت زمان:</span>
+            <span class="spec-value highlight-emerald" id="modalTimeValue">30روز</span>
+          </div>
+          <div class="spec-card">
+            <span class="spec-label">مبلغ نمایشی:</span>
+            <span class="spec-value highlight-purple" id="modalPriceValue">۱۲۵,۰۰۰ تومان</span>
+          </div>
+          <div class="spec-card">
+            <span class="spec-label">وضعیت:</span>
+            <span class="spec-value status-ready">آماده تحویل دمو</span>
+          </div>
+        </div>
+
+        <!-- Sample Config Output Box -->
+        <div class="config-sample-box">
+          <div class="config-sample-header">
+            <span>کانفیگ نمونه نمایشی (VLESS Reality):</span>
+            <button class="copy-btn" id="btnCopyConfig" onclick="copySampleConfig()">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+              <span id="copyBtnText">کپی کانفیگ</span>
+            </button>
+          </div>
+          <div class="config-code-text" id="sampleConfigText">
+            vless://a1b2c3d4-e5f6-7890-abcd-ef1234567890@de-frankfurt.netplus-demo.net:443?security=reality&sni=speedtest.net&fp=chrome&pbk=DEMO_PUBLIC_KEY_PREVIEW_ONLY_NOT_REAL&type=grpc&serviceName=grpc-vless#NetPlus-VIP-Demo-Config
+          </div>
+        </div>
+
+        <!-- QR Code Demo Representation -->
+        <div class="qr-demo-area">
+          <div class="qr-box">
+            <!-- Sleek SVG QR Code Placeholder -->
+            <svg viewBox="0 0 100 100" width="100" height="100" class="qr-svg">
+              <rect x="0" y="0" width="100" height="100" fill="#0B132B"/>
+              <!-- Position Finder Top-Left -->
+              <rect x="10" y="10" width="24" height="24" fill="#22D3EE"/>
+              <rect x="14" y="14" width="16" height="16" fill="#0B132B"/>
+              <rect x="18" y="18" width="8" height="8" fill="#22D3EE"/>
+              <!-- Position Finder Top-Right -->
+              <rect x="66" y="10" width="24" height="24" fill="#22D3EE"/>
+              <rect x="70" y="14" width="16" height="16" fill="#0B132B"/>
+              <rect x="74" y="18" width="8" height="8" fill="#22D3EE"/>
+              <!-- Position Finder Bottom-Left -->
+              <rect x="10" y="66" width="24" height="24" fill="#22D3EE"/>
+              <rect x="14" y="70" width="16" height="16" fill="#0B132B"/>
+              <rect x="18" y="74" width="8" height="8" fill="#22D3EE"/>
+              <!-- Matrix patterns -->
+              <rect x="40" y="12" width="6" height="6" fill="#22D3EE"/>
+              <rect x="52" y="12" width="6" height="6" fill="#22D3EE"/>
+              <rect x="40" y="24" width="6" height="6" fill="#22D3EE"/>
+              <rect x="46" y="32" width="8" height="8" fill="#22D3EE"/>
+              <rect x="20" y="44" width="8" height="8" fill="#22D3EE"/>
+              <rect x="36" y="44" width="6" height="6" fill="#22D3EE"/>
+              <rect x="48" y="44" width="12" height="6" fill="#22D3EE"/>
+              <rect x="68" y="44" width="8" height="8" fill="#22D3EE"/>
+              <rect x="82" y="44" width="6" height="6" fill="#22D3EE"/>
+              <rect x="40" y="58" width="10" height="8" fill="#22D3EE"/>
+              <rect x="58" y="58" width="8" height="8" fill="#22D3EE"/>
+              <rect x="72" y="58" width="12" height="6" fill="#22D3EE"/>
+              <rect x="42" y="72" width="8" height="8" fill="#22D3EE"/>
+              <rect x="56" y="72" width="6" height="12" fill="#22D3EE"/>
+              <rect x="72" y="72" width="8" height="8" fill="#22D3EE"/>
+              <rect x="84" y="72" width="6" height="12" fill="#22D3EE"/>
+            </svg>
+          </div>
+          <div class="qr-info">
+            <div class="qr-title">اسکن با دوربین یا نرم‌افزار</div>
+            <p class="qr-desc">
+              این بارکد شبیه‌سازی شده است. در برنامه‌های v2rayNG، Hiddify، Streisand و Nekoray با اسکن بارکد، کانفیگ اضافه می‌شود.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeOrderModalDirect()">بستن پنجره</button>
+        <button class="btn btn-primary" onclick="showToast('این گزینه صرفاً نمایشی است.')">تایید و ادامه (نمایشی)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-box" id="toastBox">
+    <span id="toastMsg">عملیات با موفقیت انجام شد</span>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
