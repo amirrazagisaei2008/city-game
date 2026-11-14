@@ -1,9 +1,0 @@
-name = "city-game-api"
-main = "src/index.js"
-compatibility_date = "2025-01-01"
-
-# بعد از ساخت دیتابیس D1 در داشبورد Cloudflare، شناسه‌اش را اینجا بگذار
-[[d1_databases]]
-binding = "DB"
-database_name = "city-game-db"
-database_id = "109aabd9-d74b-4a58-a89c-74855aa4f1eb"
